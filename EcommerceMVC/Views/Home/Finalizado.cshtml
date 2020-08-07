@@ -1,0 +1,73 @@
+﻿@model EcommerceMVC.Models.Cliente
+
+@{
+    ViewBag.Title = "Finalizado";
+}
+
+<h2>Finalizado</h2>
+
+@if (Session["Carrinho"] != null)
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Total Produto</th>
+        </tr>
+        @{
+            decimal Total = 0;
+        }
+        @foreach (var item in (List<EcommerceMVC.Models.Cart>)Session["Carrinho"])
+        {
+            decimal totalProd = item.ProdutoQuantidade * item.Produto.Preco;
+            Total = Total + totalProd;
+            <tr>
+                <td>@item.Produto.Nome</td>
+                <td>@item.ProdutoQuantidade</td>
+                <td>R$@item.Produto.Preco</td>
+                <td>R$@totalProd</td>
+            </tr>
+        }
+    </table>
+    <div class="alert alert-success"><h4>Total: R$@Total</h4></div>
+
+    <div>
+        <h4>Cliente</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Telefone)
+            </dd>
+
+        </dl>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">Nenhum pedido finalizado.</div>
+    <div class="info">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-md active" style="color:white;text-align:center;width:100%"><span class="glyphicon glyphicon-shopping-cart">Voltar ao Início</span></a>
+    </div>
+}
+

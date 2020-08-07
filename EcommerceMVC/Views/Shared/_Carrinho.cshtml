@@ -1,0 +1,16 @@
+﻿<ul class="nav navbar-nav navbar-right">
+    @if (Session["Carrinho"] == null)
+    {
+        <li>@Html.ActionLink("Carrinho(0)", "Carrinho", "Home")</li>
+    }
+    else
+    {
+        int totalProdutos = 0;
+        foreach (var item in (List<EcommerceMVC.Models.Cart>)Session["Carrinho"])
+        {
+            totalProdutos++;
+        }
+        <li>@Html.ActionLink("Carrinho(" + totalProdutos + ")", "Carrinho", "Home")</li>
+    }
+</ul>
+
